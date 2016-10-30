@@ -6,10 +6,11 @@ var mime = require('./mime.js');
 var config = require('./config.js');
 
 var server = http.createServer(function(req,res){
-  if (req.url === '/') {
-    var absPath =  path.join('D://assets','./index.html');
-  } else {
-    var absPath = path.join('D://assets',path.normalize(req.url.replace(/\.\./g,"")));
+  var pathname = url.parse(req.url).pathname;
+  if (pathname === '/') {
+    var absPath =  'D://assets'+pathname+'index.html';
+  } else{
+    var absPath = path.join('D:\/assets',path.normalize(pathname.replace(/\.\./g,"")));    
   }
   fs.exists(absPath,function(exists){
     if (exists) {
